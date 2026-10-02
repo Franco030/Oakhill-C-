@@ -1,5 +1,6 @@
 #pragma once
 
+#include "entities/Player.hpp"
 #include <SDL2/SDL.h>
 
 class Game {
@@ -14,6 +15,8 @@ private:
   void update(float deltaTime);
   void render();
   void clean();
+
+  Player* player;
 
   bool isRunning;
 
