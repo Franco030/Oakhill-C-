@@ -1,4 +1,5 @@
 #include "core/Game.hpp"
+#include "utils/Constants.hpp"
 #include <iostream>
 
 Game::Game() {
@@ -11,8 +12,8 @@ Game::Game() {
     return;
   }
 
-  window = SDL_CreateWindow("Oakhill", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600,
-                            SDL_WINDOW_SHOWN);
+  window = SDL_CreateWindow("Oakhill", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                            Constants::SCREEN_WIDTH, Constants::SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 
   if (!window) {
     std::cerr << "Error creando la ventana: " << SDL_GetError() << '\n';
