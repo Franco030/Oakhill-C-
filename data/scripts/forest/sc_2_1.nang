@@ -1,0 +1,64 @@
+import "lib/utils";
+
+var gamestate = get_system("GameState");
+
+func open_note() {
+    play_sound("sfx_interaction_occurred");
+    show_note("note_cemetery_entrance_0", save=true);
+    destroy_object(self.id);
+}
+
+func on_grab_key() {
+    play_sound("sfx_interaction_occurred");
+    show_dialogue("You grabbed a key", blocking=false);
+    gamestate.set_flag("has_cemetery_key", true);
+    destroy_object(self.id);
+}
+
+// This function is called by the door
+func open_door() {
+    var block_1 = get_object("obj_1765315172180_589");
+    var block_2 = get_object("obj_1765315172346_490");
+    play_sound("sfx_interaction_occurred");
+    @persist self.is_passable = true;
+    @persist self.image_id = "spr_cemetery_doors_open";
+    @persist self.sort_offset_y = 20;
+    @persist block_1.is_passable = false;
+    @persist block_2.is_passable = false;
+}
+
+// Called in door_trigger
+func unlock_door() {
+    var door = get_object("obj_1765238461284_230");
+    door.image_id = "spr_cemetery_door_closed";
+    door.flash_image = "spr_cemetery_door_flash";
+    door.charge_sound = "sfx_interacting";
+    door.interaction_blocked = false;
+}
+
+func door_trigger() {
+    var has_key = gamestate.get_flag("has_cemetery_key");
+
+    play_sound("sfx_dialogue_occurred");
+    show_dialogue("There's a door here");
+    if (has_key) {
+        // The '@' tells the interpreter to return the result the function made otherwise it will do something and that's it no result returned.
+        var choice = @ask_choice("Unlock this door?", "use_key");
+        if (choice.value) {
+            unlock_door();
+            // choice.source it's equal to self.id but when I made this, "self" didn't exist.
+            destroy_object(choice.source);
+        }
+    } else {
+        show_dialogue("It's locked");
+    }
+}
+
+func move_crow() {
+    var tween_manager = get_system("TweenManager");
+    var crow = get_object("obj_1765495681237_66");
+    crow.start_animation();
+    tween_manager.start_move(crow, -100, -100, 4);
+    play_sound("sfx_crow_flying");
+    destroy_object(self.id);
+}

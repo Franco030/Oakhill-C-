@@ -2,8 +2,8 @@
 
 namespace Constants {
 
-constexpr int SCREEN_WIDTH = 800;
-constexpr int SCREEN_HEIGHT = 600;
+constexpr int SCREEN_WIDTH = 1280;
+constexpr int SCREEN_HEIGHT = 800;
 
 constexpr float PLAYER_SPEED = 120.0f;
 constexpr float RESIZE_FACTOR = 4.0f;

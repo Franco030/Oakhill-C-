@@ -4,7 +4,7 @@
 
 Player::Player(float startX, float startY) {
   position = Vector2D(startX, startY);
-  texture = ResourceManager::getTexture("spr_player");
+  texture = ResourceManager::getTexture("spr_detective");
   speed = Constants::PLAYER_SPEED;
 
   destRect = {static_cast<int>(position.x), static_cast<int>(position.y), 0, 0};

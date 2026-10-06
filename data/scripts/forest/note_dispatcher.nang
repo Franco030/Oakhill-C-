@@ -1,0 +1,30 @@
+import "lib/utils";
+
+func read_note() {
+    play_sound("sfx_interaction_occurred");
+    
+    if (self.interaction_data) {
+        show_note(self.interaction_data);
+
+        if (self.used_image) {
+            self.image = self.used_image;
+            self.original_image = self.used_image;
+        } else {
+            destroy_object(self.id);
+        }
+    } else {
+        show_note("note_error");
+    }
+}
+
+func note_5_2() {
+    play_sound("sfx_interaction_occurred");
+    show_note("note_welcome");
+    hide_object(self.id);
+}
+
+func note_4_2() {
+    play_sound("sfx_interaction_occurred");
+    show_note("note_warning_0");
+    hide_object(self.id);
+}

@@ -1,0 +1,56 @@
+var resource_manager = get_system("ResourceManager");
+var scene = get_system("Scene");
+
+func play_sound(id, volume) {
+    var snd = @external resource_manager.get_sound(id);
+    if (snd) {
+        if (volume) {
+            snd.set_volume(volume);
+        }
+        snd.play();
+    }
+}
+
+func unhide_object(id) {
+    if (id) {
+        scene.unhide_object_by_id(id);
+    }
+}
+
+func hide_object(id) {
+    if (id) {
+        scene.hide_object_by_id(id);
+    }
+}
+
+func sleep(miliseconds) {
+    var w = WaitResult(miliseconds * 1000, true);
+    w;
+}
+
+func show_dialogue(text, color="#ffffff", pause_music=false, blocking=true) {
+    var dlg = DialogueResult(text, color, pause_music, blocking);
+    dlg;
+}
+
+func show_note(note_id, save, blocking=true) {
+    var note_manager = get_system("NoteManager");
+    var nt_ex = note_manager.note_exists(note_id);
+    if (nt_ex) {
+        if (save) {
+            var gamestate = get_system("GameState");
+            gamestate.unlock_note(note_id);
+        }
+    }
+    else {
+        // fallback
+        note_id = "note_error";
+    }
+    var nt = NoteResult(note_id, blocking);
+    nt;
+}
+
+func ask_choice(question, flag_name, blocking=true) {
+    var ch = ChoiceResult(question, flag_name, blocking);
+    ch;
+}

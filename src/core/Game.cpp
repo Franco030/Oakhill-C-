@@ -54,7 +54,8 @@ Game::Game() {
     std::cerr << "Error inicializando SDL_ttf: " << TTF_GetError() << '\n';
   }
 
-  ResourceManager::loadTexture("spr_player", "assets/images/detective.png", renderer.get());
+  ResourceManager::init(renderer.get());
+  ResourceManager::loadManifest();
   player = std::make_unique<Player>(100.0f, 100.0f);
 
   isRunning = true;
@@ -63,6 +64,8 @@ Game::Game() {
 Game::~Game() {
   player.reset();
   ResourceManager::clean();
+  renderer.reset();
+  window.reset();
 
   TTF_Quit();
   Mix_CloseAudio();
