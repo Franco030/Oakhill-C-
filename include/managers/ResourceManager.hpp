@@ -1,7 +1,6 @@
 #pragma once
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include "utils/SDLPtrs.hpp"
 #include <string>
 #include <unordered_map>
 
@@ -13,5 +12,5 @@ public:
   static void clean();
 
 private:
-  static std::unordered_map<std::string, SDL_Texture*> textures;
+  static std::unordered_map<std::string, TexturePtr> textures;
 };

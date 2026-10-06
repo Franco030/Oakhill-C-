@@ -14,7 +14,8 @@ find_package(SDL2_ttf REQUIRED)
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 
 # Crear el ejecutable
-add_executable(Oakhill ${SOURCES})
+add_executable(Oakhill ${SOURCES}
+    include/utils/SDLPtrs.hpp)
 
 target_include_directories(Oakhill PRIVATE 
     ${CMAKE_SOURCE_DIR}/include 

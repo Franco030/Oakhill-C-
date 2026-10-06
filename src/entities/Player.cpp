@@ -1,20 +1,21 @@
 #include "entities/Player.hpp"
 #include "managers/ResourceManager.hpp"
+#include "utils/Constants.hpp"
 
 Player::Player(float startX, float startY) {
   position = Vector2D(startX, startY);
-
   texture = ResourceManager::getTexture("spr_player");
+  speed = Constants::PLAYER_SPEED;
 
-  int width, height;
-  SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
+  destRect = {static_cast<int>(position.x), static_cast<int>(position.y), 0, 0};
 
-  destRect.w = width;
-  destRect.h = height;
-  destRect.x = (int)position.x;
-  destRect.y = (int)position.y;
-
-  speed = 200.0f;
+  if (texture) {
+    int width = 0;
+    int height = 0;
+    SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
+    destRect.w = static_cast<int>(width * Constants::RESIZE_FACTOR);
+    destRect.h = static_cast<int>(height * Constants::RESIZE_FACTOR);
+  }
 }
 
 Player::~Player() {}
